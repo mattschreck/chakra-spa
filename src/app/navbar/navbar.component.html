@@ -1,21 +1,24 @@
 <div class="max-w-screen-2xl mx-auto px-4 flex items-center justify-between py-4">
-  <!-- Logo -->
+  <!-- Logo: Link zur SPA-Home -->
   <a routerLink="/home">
     <img src="assets/images/chakra-logo.png" alt="Chakra Logo" class="h-8 w-auto" />
   </a>
 
-  <!-- Mitte: Trainingsplan -->
-  <ul class="hidden lg:flex space-x-6">
+  <!-- Desktop-Menü -->
+  <ul class="hidden lg:flex space-x-6 items-center">
+    <!-- Interner Link: Trainingsplan innerhalb der SPA -->
     <li>
       <a routerLink="/exercises" class="text-gray-600 hover:text-green-500">
         Trainingsplan
       </a>
     </li>
-  </ul>
-
-  <!-- Rechts: Login/Register oder Account/Logout -->
-  <ul class="hidden lg:flex space-x-6 items-center">
-    <ng-container *ngIf="!isLoggedIn; else loggedIn">
+    <!-- Externer Link: Zur MPA -->
+    <li>
+      <a href="https://chakra-frontend-22562b10ca9e.herokuapp.com/index.html" class="text-gray-600 hover:text-green-500" target="_blank">
+        MPA Homepage
+      </a>
+    </li>
+    <ng-container *ngIf="!isLoggedIn; else loggedInDesktop">
       <li>
         <a routerLink="/login" class="text-gray-600 border border-gray-300 px-4 py-2 rounded-md hover:text-green-500">
           Login
@@ -27,7 +30,7 @@
         </a>
       </li>
     </ng-container>
-    <ng-template #loggedIn>
+    <ng-template #loggedInDesktop>
       <li>
         <a routerLink="/account" class="text-gray-600 hover:text-green-500">
           <img src="assets/images/person.svg" alt="Account" class="h-6 w-6" />
@@ -41,10 +44,50 @@
     </ng-template>
   </ul>
 
-  <!-- Optional: Hamburger-Menü für mobile Ansicht -->
-  <button id="menu-toggle" class="lg:hidden text-gray-600 hover:text-green-500">
+  <!-- Hamburger-Button für mobile Geräte -->
+  <button (click)="toggleMenu()" class="lg:hidden text-gray-600 hover:text-green-500">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
     </svg>
   </button>
+</div>
+
+<!-- Mobile-Menü -->
+<div *ngIf="menuOpen" class="lg:hidden bg-white border-t border-gray-200">
+  <ul class="px-4 py-2 space-y-2">
+    <li>
+      <a routerLink="/exercises" (click)="toggleMenu()" class="block text-gray-600 hover:text-green-500">
+        Trainingsplan
+      </a>
+    </li>
+    <li>
+      <a href="https://chakra-frontend-22562b10ca9e.herokuapp.com/index.html" (click)="toggleMenu()" class="block text-gray-600 hover:text-green-500" target="_blank">
+        MPA Homepage
+      </a>
+    </li>
+    <ng-container *ngIf="!isLoggedIn; else mobileLoggedIn">
+      <li>
+        <a routerLink="/login" (click)="toggleMenu()" class="block text-gray-600 border border-gray-300 px-4 py-2 rounded-md hover:text-green-500">
+          Login
+        </a>
+      </li>
+      <li>
+        <a routerLink="/register" (click)="toggleMenu()" class="block bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
+          Register
+        </a>
+      </li>
+    </ng-container>
+    <ng-template #mobileLoggedIn>
+      <li>
+        <a routerLink="/account" (click)="toggleMenu()" class="block text-gray-600 hover:text-green-500">
+          Account
+        </a>
+      </li>
+      <li>
+        <button (click)="logoff(); toggleMenu()" class="w-full text-red-500 border border-red-500 px-4 py-2 rounded-md hover:bg-red-500 hover:text-white">
+          Logout
+        </button>
+      </li>
+    </ng-template>
+  </ul>
 </div>
