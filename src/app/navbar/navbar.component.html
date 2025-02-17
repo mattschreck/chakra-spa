@@ -4,45 +4,43 @@
     <img src="assets/images/chakra-logo.png" alt="Chakra Logo" class="h-8 w-auto" />
   </a>
 
-  <!-- Desktop-Menü -->
-  <ul class="hidden lg:flex space-x-6 items-center">
-    <!-- Interner Link: Trainingsplan innerhalb der SPA -->
-    <li>
-      <a routerLink="/exercises" class="text-gray-600 hover:text-green-500">
-        Trainingsplan
-      </a>
-    </li>
-    <!-- Externer Link: Zur MPA -->
-    <li>
-      <a href="https://chakra-frontend-22562b10ca9e.herokuapp.com/index.html" class="text-gray-600 hover:text-green-500" target="_blank">
-        MPA Homepage
-      </a>
-    </li>
+  <!-- Mitte: Navigation (zentriert) -->
+  <div class="flex-grow flex justify-center">
+    <ul class="flex space-x-6 items-center">
+      <!-- Intern: Trainingsplan -->
+      <li>
+        <a routerLink="/exercises" class="text-gray-600 hover:text-green-500">
+          Trainingsplan
+        </a>
+      </li>
+      <!-- Extern: MPA-Homepage -->
+      <li>
+        <a href="https://chakra-frontend-22562b10ca9e.herokuapp.com/index.html" class="text-gray-600 hover:text-green-500" target="_blank">
+          MPA Homepage
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Rechts: Auth-Links -->
+  <div class="hidden lg:flex items-center">
     <ng-container *ngIf="!isLoggedIn; else loggedInDesktop">
-      <li>
-        <a routerLink="/login" class="text-gray-600 border border-gray-300 px-4 py-2 rounded-md hover:text-green-500">
-          Login
-        </a>
-      </li>
-      <li>
-        <a routerLink="/register" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
-          Register
-        </a>
-      </li>
+      <a routerLink="/login" class="text-gray-600 border border-gray-300 px-4 py-2 rounded-md hover:text-green-500">
+        Login
+      </a>
+      <a routerLink="/register" class="ml-2 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
+        Register
+      </a>
     </ng-container>
     <ng-template #loggedInDesktop>
-      <li>
-        <a routerLink="/account" class="text-gray-600 hover:text-green-500">
-          <img src="assets/images/person.svg" alt="Account" class="h-6 w-6" />
-        </a>
-      </li>
-      <li>
-        <button (click)="logoff()" class="text-red-500 border border-red-500 px-4 py-2 rounded-md hover:bg-red-500 hover:text-white">
-          Logout
-        </button>
-      </li>
+      <a routerLink="/account" class="text-gray-600 hover:text-green-500">
+        <img src="assets/images/person.svg" alt="Account" class="h-6 w-6" />
+      </a>
+      <button (click)="logoff()" class="ml-2 text-red-500 border border-red-500 px-4 py-2 rounded-md hover:bg-red-500 hover:text-white">
+        Logout
+      </button>
     </ng-template>
-  </ul>
+  </div>
 
   <!-- Hamburger-Button für mobile Geräte -->
   <button (click)="toggleMenu()" class="lg:hidden text-gray-600 hover:text-green-500">
