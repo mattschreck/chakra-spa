@@ -28,8 +28,8 @@ export class LoginComponent {
           if (res.email) {
             localStorage.setItem('userEmail', res.email);
           }
-          // Nach Login zur Account- oder Home-Seite navigieren
-          this.router.navigate(['/account']);
+          // Navigation zur Home-Seite statt Account
+          this.router.navigate(['/home']);
         } else {
           this.message = 'Fehler: ' + res.message;
         }

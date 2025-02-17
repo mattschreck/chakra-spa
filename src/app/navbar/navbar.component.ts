@@ -8,13 +8,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
+  menuOpen: boolean = false;
+
   constructor(private router: Router) {}
 
   get isLoggedIn(): boolean {
     return !!localStorage.getItem('authToken');
   }
 
-  logoff() {
+  toggleMenu(): void {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  logoff(): void {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userId');
     localStorage.removeItem('userName');
@@ -22,3 +28,4 @@ export class NavbarComponent {
     this.router.navigate(['/home']);
   }
 }
+

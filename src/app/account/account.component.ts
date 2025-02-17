@@ -34,7 +34,7 @@ export class AccountComponent implements OnInit {
 
   logoff(): void {
     localStorage.clear();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
 
   updateEmail(): void {
