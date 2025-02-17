@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from '../data/user.service';
 
 @Component({
   selector: 'app-account',
-  standalone: false,
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
@@ -13,9 +13,14 @@ export class AccountComponent implements OnInit {
   userEmail = '';
   message = '';
 
-  constructor(private router: Router) {}
+  newEmail = '';
+  newPassword = '';
+  emailEditResult = '';
+  pwEditResult = '';
 
-  ngOnInit() {
+  constructor(private router: Router, private userService: UserService) {}
+
+  ngOnInit(): void {
     const token = localStorage.getItem('authToken');
     this.userId = localStorage.getItem('userId') || '';
     this.userName = localStorage.getItem('userName') || '';
@@ -26,8 +31,48 @@ export class AccountComponent implements OnInit {
     }
   }
 
-  logoff() {
+  logoff(): void {
     localStorage.clear();
     this.router.navigate(['/login']);
+  }
+
+  updateEmail(): void {
+    if (!this.newEmail) {
+      this.emailEditResult = "Bitte eine neue E-Mail eingeben.";
+      return;
+    }
+    this.userService.updateEmail(this.userId, this.newEmail).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.emailEditResult = "E-Mail erfolgreich geändert!";
+          localStorage.setItem('userEmail', res.updatedEmail);
+          this.userEmail = res.updatedEmail;
+        } else {
+          this.emailEditResult = "Fehler: " + res.message;
+        }
+      },
+      (err: any) => {
+        this.emailEditResult = "Server-Fehler: " + err.message;
+      }
+    );
+  }
+
+  updatePassword(): void {
+    if (!this.newPassword) {
+      this.pwEditResult = "Bitte ein neues Passwort eingeben.";
+      return;
+    }
+    this.userService.updatePassword(this.userId, this.newPassword).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.pwEditResult = "Passwort erfolgreich geändert!";
+        } else {
+          this.pwEditResult = "Fehler: " + res.message;
+        }
+      },
+      (err: any) => {
+        this.pwEditResult = "Server-Fehler: " + err.message;
+      }
+    );
   }
 }

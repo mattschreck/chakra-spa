@@ -21,4 +21,20 @@ export class UserService {
       { name, email, password }
     );
   }
+
+  // Neue Methode: Update der E-Mail
+  updateEmail(userId: string, newEmail: string): Observable<any> {
+    return this.http.put<any>(
+      `${this.BACKEND_URL}/api/users/${userId}`,
+      { email: newEmail }
+    );
+  }
+
+  // Neue Methode: Update des Passworts
+  updatePassword(userId: string, newPassword: string): Observable<any> {
+    return this.http.put<any>(
+      `${this.BACKEND_URL}/api/users/${userId}`,
+      { password: newPassword }
+    );
+  }
 }

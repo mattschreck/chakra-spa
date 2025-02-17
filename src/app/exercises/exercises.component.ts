@@ -1,11 +1,10 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { ExerciseService } from '../data/exercise.service';
-import { Calendar } from '@fullcalendar/core';
+import { Calendar, EventClickArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 
 @Component({
   selector: 'app-exercises',
-  standalone: false,
   templateUrl: './exercises.component.html',
   styleUrls: ['./exercises.component.css']
 })
@@ -21,8 +20,13 @@ export class ExercisesComponent implements OnInit, AfterViewInit {
   bodyPart = '';
   message = '';
 
-  // FullCalendar-Instanz, um events refetchen zu können
-  calendar: any;
+  // FullCalendar-Instanz, um Events neu zu laden
+  calendar: Calendar | null = null;
+
+  // Eigenschaften für das Löschmodal
+  showDeleteModal: boolean = false;
+  currentExerciseId: string = '';
+  currentExerciseTitle: string = '';
 
   constructor(private exerciseService: ExerciseService) {}
 
@@ -40,20 +44,23 @@ export class ExercisesComponent implements OnInit, AfterViewInit {
       initialView: 'dayGridMonth',
       locale: 'de',
       events: {
-        url: this.exerciseService.getEventsUrl(this.userId), // z. B. BACKEND/api/exercises/{userId}
+        url: this.exerciseService.getEventsUrl(this.userId),
         method: 'GET',
         failure: () => {
           alert('Fehler beim Laden der Events!');
         }
       },
-      eventClick: (info) => {
-        // z. B. Modal
+      eventClick: (info: EventClickArg) => {
+        // Bei Klick auf ein Event Modal öffnen zum Löschen
+        this.currentExerciseId = info.event.id;
+        this.currentExerciseTitle = info.event.title;
+        this.showDeleteModal = true;
       }
     });
     this.calendar.render();
   }
 
-  addExercise() {
+  addExercise(): void {
     if (!this.userId) {
       this.message = 'Keine userId => bitte einloggen!';
       return;
@@ -67,7 +74,7 @@ export class ExercisesComponent implements OnInit, AfterViewInit {
       bodyPart: this.bodyPart
     };
     this.exerciseService.addExercise(this.userId, newEx).subscribe(
-      res => {
+      (res: any) => {
         this.message = 'Übung hinzugefügt!';
         // Felder zurücksetzen
         this.title = '';
@@ -79,14 +86,43 @@ export class ExercisesComponent implements OnInit, AfterViewInit {
         // Kalender neu laden
         this.calendar?.refetchEvents();
       },
-      err => {
+      (err: any) => {
         this.message = 'Fehler: ' + err.message;
       }
     );
   }
 
-  logoff() {
+  deleteExercise(): void {
+    if (!this.currentExerciseId) {
+      alert("Kein Event ausgewählt!");
+      return;
+    }
+    if (!confirm(`Möchten Sie die Übung "${this.currentExerciseTitle}" wirklich löschen?`)) {
+      return;
+    }
+    this.exerciseService.deleteExercise(this.userId, this.currentExerciseId).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.message = 'Übung gelöscht!';
+          this.showDeleteModal = false;
+          this.calendar?.refetchEvents();
+        } else {
+          this.message = 'Fehler beim Löschen: ' + res.message;
+        }
+      },
+      (err: any) => {
+        this.message = 'Fehler beim Löschen: ' + err.message;
+      }
+    );
+  }
+
+  closeDeleteModal(): void {
+    this.showDeleteModal = false;
+  }
+
+  logoff(): void {
     localStorage.clear();
     this.message = 'Abgemeldet!';
   }
 }
+

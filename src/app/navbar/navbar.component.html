@@ -1,9 +1,10 @@
-<div class="max-w-screen-2xl mx-auto px-4 flex items-center justify-between py-4 bg-white border-b border-gray-200 fixed w-full z-10">
+<div class="max-w-screen-2xl mx-auto px-4 flex items-center justify-between py-4">
   <!-- Logo -->
   <a routerLink="/home">
     <img src="assets/images/chakra-logo.png" alt="Chakra Logo" class="h-8 w-auto" />
   </a>
-  <!-- Link Mitte -->
+
+  <!-- Mitte: Trainingsplan -->
   <ul class="hidden lg:flex space-x-6">
     <li>
       <a routerLink="/exercises" class="text-gray-600 hover:text-green-500">
@@ -11,7 +12,8 @@
       </a>
     </li>
   </ul>
-  <!-- Rechts -->
+
+  <!-- Rechts: Login/Register oder Account/Logout -->
   <ul class="hidden lg:flex space-x-6 items-center">
     <ng-container *ngIf="!isLoggedIn; else loggedIn">
       <li>
@@ -38,4 +40,11 @@
       </li>
     </ng-template>
   </ul>
+
+  <!-- Optional: Hamburger-Menü für mobile Ansicht -->
+  <button id="menu-toggle" class="lg:hidden text-gray-600 hover:text-green-500">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
 </div>

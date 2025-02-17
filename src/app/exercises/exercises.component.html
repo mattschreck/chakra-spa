@@ -8,22 +8,22 @@
 <div *ngIf="userId" class="bg-white p-4 rounded shadow mb-6">
   <h2 class="text-2xl font-bold mb-4">Neue Übung</h2>
   <label>Titel:</label><br/>
-  <input [(ngModel)]="title" type="text" /><br/><br/>
+  <input [(ngModel)]="title" type="text" class="border border-gray-300 p-2 rounded w-full"/><br/><br/>
 
   <label>Datum:</label><br/>
-  <input [(ngModel)]="date" type="date" /><br/><br/>
+  <input [(ngModel)]="date" type="date" class="border border-gray-300 p-2 rounded w-full"/><br/><br/>
 
   <label>Gewicht:</label><br/>
-  <input [(ngModel)]="weight" type="number" /><br/><br/>
+  <input [(ngModel)]="weight" type="number" class="border border-gray-300 p-2 rounded w-full"/><br/><br/>
 
   <label>Wiederholungen:</label><br/>
-  <input [(ngModel)]="repetitions" type="number" /><br/><br/>
+  <input [(ngModel)]="repetitions" type="number" class="border border-gray-300 p-2 rounded w-full"/><br/><br/>
 
   <label>Sätze:</label><br/>
-  <input [(ngModel)]="sets" type="number" /><br/><br/>
+  <input [(ngModel)]="sets" type="number" class="border border-gray-300 p-2 rounded w-full"/><br/><br/>
 
   <label>Körperpartie:</label><br/>
-  <select [(ngModel)]="bodyPart">
+  <select [(ngModel)]="bodyPart" class="border border-gray-300 p-2 rounded w-full">
     <option value="">--bitte wählen--</option>
     <option value="Arme">Arme</option>
     <option value="Brust">Brust</option>
@@ -33,14 +33,32 @@
   </select>
   <br/><br/>
 
-  <button (click)="addExercise()" class="bg-green-500 text-white px-4 py-2">
+  <button (click)="addExercise()" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
     Hinzufügen
   </button>
 </div>
 
-<button (click)="logoff()" class="bg-red-500 text-white px-4 py-2">
+<button (click)="logoff()" class="bg-red-500 text-white px-4 py-2 rounded-md">
   Logout
 </button>
 
 <!-- FullCalendar-Container -->
 <div #calendar class="bg-white p-4 rounded shadow mt-6"></div>
+
+<!-- Modal zum Löschen einer Übung -->
+<div *ngIf="showDeleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md">
+    <h3 class="text-xl font-bold mb-4">Übung löschen</h3>
+    <p class="mb-4">
+      Möchten Sie die Übung "<strong>{{ currentExerciseTitle }}</strong>" wirklich löschen?
+    </p>
+    <div class="flex justify-end space-x-4">
+      <button (click)="closeDeleteModal()" class="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-md">
+        Abbrechen
+      </button>
+      <button (click)="deleteExercise()" class="px-4 py-2 bg-red-500 text-white hover:bg-red-600 rounded-md">
+        Löschen
+      </button>
+    </div>
+  </div>
+</div>
