@@ -1,8 +1,9 @@
+// server.js
 const express = require('express');
 const path = require('path');
 const app = express();
 
-// Statische Dateien aus dem dist-Ordner servieren
+// Statische Dateien aus dem Angular-Build (dist/myspa) servieren
 app.use(express.static(path.join(__dirname, 'dist', 'myspa')));
 
 // Alle Routen auf index.html umleiten
