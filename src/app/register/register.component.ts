@@ -14,22 +14,20 @@ export class RegisterComponent {
   password = '';
   message = '';
 
-  constructor(
-    private router: Router,
-    private userService: UserService
-  ) {}
+  constructor(private router: Router, private userService: UserService) {}
 
-  doRegister() {
+  doRegister(): void {
     this.userService.register(this.name, this.email, this.password).subscribe(
-      res => {
+      (res: any) => {
         if (res.success) {
           this.message = 'Registrierung erfolgreich!';
-          this.router.navigate(['/login']);
+          // Direkt zur Home-Seite navigieren
+          this.router.navigate(['/home']);
         } else {
           this.message = 'Fehler: ' + res.message;
         }
       },
-      err => {
+      (err: any) => {
         this.message = 'Server-Fehler: ' + err.message;
       }
     );

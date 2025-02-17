@@ -21,7 +21,7 @@ export class ExercisesComponent implements OnInit, AfterViewInit {
   bodyPart = '';
   message = '';
 
-  // FullCalendar-Instanz, um Events neu zu laden
+  // FullCalendar-Instanz zum Refetchen der Events
   calendar: Calendar | null = null;
 
   // Eigenschaften für das Löschmodal
@@ -52,7 +52,7 @@ export class ExercisesComponent implements OnInit, AfterViewInit {
         }
       },
       eventClick: (info: EventClickArg) => {
-        // Bei Klick auf ein Event Modal öffnen zum Löschen
+        // Beim Klick auf ein Event wird das Löschmodal geöffnet
         this.currentExerciseId = info.event.id;
         this.currentExerciseTitle = info.event.title;
         this.showDeleteModal = true;
@@ -126,4 +126,3 @@ export class ExercisesComponent implements OnInit, AfterViewInit {
     this.message = 'Abgemeldet!';
   }
 }
-

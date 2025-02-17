@@ -13,25 +13,28 @@ export class LoginComponent {
   password = '';
   message = '';
 
-  constructor(
-    private router: Router,
-    private userService: UserService
-  ) {}
+  constructor(private router: Router, private userService: UserService) {}
 
-  doLogin() {
+  doLogin(): void {
     this.userService.login(this.email, this.password).subscribe(
-      res => {
+      (res: any) => {
         if (res.success) {
           this.message = 'Login erfolgreich!';
           localStorage.setItem('authToken', res.token);
           localStorage.setItem('userId', res.userId);
-          // optional userName, userEmail
-          this.router.navigate(['/home']);
+          if (res.name) {
+            localStorage.setItem('userName', res.name);
+          }
+          if (res.email) {
+            localStorage.setItem('userEmail', res.email);
+          }
+          // Nach Login zur Account- oder Home-Seite navigieren
+          this.router.navigate(['/account']);
         } else {
           this.message = 'Fehler: ' + res.message;
         }
       },
-      err => {
+      (err: any) => {
         this.message = 'Server-Fehler: ' + err.message;
       }
     );

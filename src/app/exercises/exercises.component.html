@@ -3,9 +3,9 @@
   Hier können Sie Ihren individuellen Trainingsplan einsehen, bearbeiten und neue Übungen hinzufügen.
 </p>
 
-<div style="color:red;" class="mb-4">{{ message }}</div>
+<div style="color:red;" class="mb-4 text-center">{{ message }}</div>
 
-<div *ngIf="userId" class="bg-white p-4 rounded shadow mb-6">
+<div *ngIf="userId" class="bg-white p-4 rounded shadow mb-6 max-w-lg mx-auto">
   <h2 class="text-2xl font-bold mb-4">Neue Übung</h2>
   <label>Titel:</label><br/>
   <input [(ngModel)]="title" type="text" class="border border-gray-300 p-2 rounded w-full"/><br/><br/>
@@ -38,12 +38,14 @@
   </button>
 </div>
 
-<button (click)="logoff()" class="bg-red-500 text-white px-4 py-2 rounded-md">
-  Logout
-</button>
+<div class="max-w-lg mx-auto">
+  <button (click)="logoff()" class="bg-red-500 text-white px-4 py-2 rounded-md mb-6">
+    Logout
+  </button>
+</div>
 
-<!-- FullCalendar-Container -->
-<div #calendar class="bg-white p-4 rounded shadow mt-6"></div>
+<!-- FullCalendar-Container (mit zusätzlichem horizontalen Margin) -->
+<div #calendar class="bg-white p-4 rounded shadow mt-6 mx-4"></div>
 
 <!-- Modal zum Löschen einer Übung -->
 <div *ngIf="showDeleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">

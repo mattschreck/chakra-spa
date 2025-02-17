@@ -2,24 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ExerciseService {
-  private baseUrl = 'https://dein-backend-url/api/exercises'; // Passe die URL an
+  private BASE_URL = 'https://chakra-backend-3783b443f623.herokuapp.com/api/exercises';
 
   constructor(private http: HttpClient) {}
 
   getEventsUrl(userId: string): string {
-    return `${this.baseUrl}/${userId}`;
+    return `${this.BASE_URL}/${userId}`;
   }
 
   addExercise(userId: string, exercise: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/${userId}`, exercise);
+    return this.http.post(`${this.BASE_URL}/${userId}`, exercise);
   }
 
-  // Neue Methode zum Löschen einer Übung:
-  deleteExercise(userId: string, exerciseId: string): Observable<{ success: boolean; message: string }> {
-    return this.http.delete<{ success: boolean; message: string }>(`${this.baseUrl}/${userId}/${exerciseId}`);
+  deleteExercise(userId: string, exerciseId: string): Observable<any> {
+    return this.http.delete(`${this.BASE_URL}/${userId}/${exerciseId}`);
   }
 }
