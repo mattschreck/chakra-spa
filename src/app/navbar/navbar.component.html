@@ -1,0 +1,41 @@
+<div class="max-w-screen-2xl mx-auto px-4 flex items-center justify-between py-4 bg-white border-b border-gray-200 fixed w-full z-10">
+  <!-- Logo -->
+  <a routerLink="/home">
+    <img src="assets/images/chakra-logo.png" alt="Chakra Logo" class="h-8 w-auto" />
+  </a>
+  <!-- Link Mitte -->
+  <ul class="hidden lg:flex space-x-6">
+    <li>
+      <a routerLink="/exercises" class="text-gray-600 hover:text-green-500">
+        Trainingsplan
+      </a>
+    </li>
+  </ul>
+  <!-- Rechts -->
+  <ul class="hidden lg:flex space-x-6 items-center">
+    <ng-container *ngIf="!isLoggedIn; else loggedIn">
+      <li>
+        <a routerLink="/login" class="text-gray-600 border border-gray-300 px-4 py-2 rounded-md hover:text-green-500">
+          Login
+        </a>
+      </li>
+      <li>
+        <a routerLink="/register" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
+          Register
+        </a>
+      </li>
+    </ng-container>
+    <ng-template #loggedIn>
+      <li>
+        <a routerLink="/account" class="text-gray-600 hover:text-green-500">
+          <img src="assets/images/person.svg" alt="Account" class="h-6 w-6" />
+        </a>
+      </li>
+      <li>
+        <button (click)="logoff()" class="text-red-500 border border-red-500 px-4 py-2 rounded-md hover:bg-red-500 hover:text-white">
+          Logout
+        </button>
+      </li>
+    </ng-template>
+  </ul>
+</div>

@@ -1,0 +1,13 @@
+<h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Mein Account</h2>
+
+<div style="color:red;" class="text-center mb-4">{{ message }}</div>
+
+<div class="mb-4 text-gray-700">
+  <p><strong>UserID:</strong> {{ userId }}</p>
+  <p><strong>Name:</strong> {{ userName }}</p>
+  <p><strong>Email:</strong> {{ userEmail }}</p>
+</div>
+
+<button (click)="logoff()" class="w-full bg-red-500 text-white py-3 rounded-lg hover:bg-red-600 transition">
+  Logout
+</button>
