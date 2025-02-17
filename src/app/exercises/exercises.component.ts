@@ -5,6 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 
 @Component({
   selector: 'app-exercises',
+  standalone: false,
   templateUrl: './exercises.component.html',
   styleUrls: ['./exercises.component.css']
 })
